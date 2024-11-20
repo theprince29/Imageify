@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
 import passport from 'passport';
-import { registerSchema } from '../middlewares/validator.js';
+import { registerSchema,loginSchema } from '../middlewares/validator.js';
 
 // Helper to send email
 const sendEmail = async (email, subject, message) => {
@@ -100,10 +100,22 @@ export const verifyEmail = async (req, res) => {
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
+  // Validate request data
+  const { error } = loginSchema.validate({ email, password });
+  if (error) {
+    console.error('Validation Error:', error.details[0].message);
+    return res.status(400).json({ error: error.details[0].message });
+  }
+
   try {
-    const user = await User.findOne({ email });
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+    const user = await User.findOne({ email }).select('+password'); // Explicitly include password since it's excluded in the schema
+    console.log('User:', user);
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    console.log('Password valid:', isPasswordValid); // Debugging log
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: 'Invalid credentials (password mismatch)' });
     }
 
     if (!user.status) {
