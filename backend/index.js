@@ -1,9 +1,11 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import passport from 'passport';
-import session from 'express-session';
+import session, { Cookie } from 'express-session';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 // import './config/passportConfig.js'; 
 
 
@@ -13,21 +15,21 @@ dotenv.config();
 
 // Initialize Express app
 const app = express();
-
+app.use(cors());
+app.use(cookieParser());
 
 
 // Middleware to parse JSON
 app.use(express.json());
+app.use(express.urlencoded({extended:true}))
+
 
 
 
 
 // Connect to MongoDB
 mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGODB_URI)
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
@@ -69,7 +71,10 @@ app.use('/api/auth', authRoutes);
 
 // Basic route for health check
 app.get('/', (req, res) => {
-  res.send('API is running...');
+  res.send('Welcome to Backend of Imagify.....');
+});
+app.get('/api', (req, res) => {
+  res.send('API is runing well');
 });
 
 

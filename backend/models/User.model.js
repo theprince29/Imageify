@@ -5,20 +5,39 @@ const UsersSchema = Schema(
         username: {
             type: String,
             required: [true, "User name required"],
+            unique:[true,"User must be unique"],
         },
         email: {
             type: String,
-            
-            required: true,
+            required: [true,'Email is required'],
+            trim:true,
+            unique:[true,'Email must be unique'],
+            minLength:[5,'Email must have 5 char!'],
         },
         password: {
             type: String,
-            required: false,
+            required: [true,'Password must be provided!'],
+            trim:true,
+            select:false,
         },
-        verification_token: {
-            type: String,
+        verified:{
+            type: Boolean,
+            default:false,
+        },
+        verificationCodeValidation: {
+            type: Number,
             default: null,
+            select:false,
         },
+        forgotPasswordCode:{
+            type:String,
+            select:false,
+        },
+        forgotPasswordCodeValidation:{
+            type:Number,
+            select:false,
+        },
+
         status: {
             type: Boolean,
             default: 0,

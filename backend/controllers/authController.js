@@ -4,16 +4,19 @@ import bcrypt from 'bcryptjs';
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
 import passport from 'passport';
+import { registerSchema } from '../middlewares/validator.js';
 
 // Helper to send email
 const sendEmail = async (email, subject, message) => {
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.mailtrap.io',
+    port: 587,
     auth: {
       user: process.env.EMAIL_USERNAME,
       pass: process.env.EMAIL_PASSWORD,
     },
   });
+ 
 
   const mailOptions = {
     from: process.env.EMAIL_USERNAME,
@@ -31,9 +34,16 @@ export const register = async (req, res) => {
 
   try {
     // Check if user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ error: 'User already exists' });
+    const {error,value} = registerSchema.validate({email,password,username});
+    if(error)
+    {
+      return res.status(401).json({success:false,message:error.details[0].message});
+    }
+    const existingUser = await User.findOne({email})
+
+    if(existingUser)
+    {
+      return res.status(401).json({success:false,message:"User already registered"})
     }
 
     // Hash the password
