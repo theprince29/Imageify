@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -54,24 +55,30 @@ export default function Navbar() {
           menuOpen ? "block" : "hidden"
         } absolute top-12 left-0 w-full bg-white lg:flex lg:space-x-4 lg:static lg:w-auto`}
       >
-        <a
-          href="#explore"
+        <Link
+          to="/"
           className="block py-2 px-4 text-gray-600 hover:text-gray-900 lg:inline"
         >
-          Explore
-        </a>
-        <a
-          href="#pricing"
+          Home
+        </Link>
+        <Link
+          to="Examples"
+          className="block py-2 px-4 text-gray-600 hover:text-gray-900 lg:inline"
+        >
+          Examples
+        </Link>
+        <Link
+          to="#pricing"
           className="block py-2 px-4 text-gray-600 hover:text-gray-900 lg:inline"
         >
           Pricing
-        </a>
-        <a
-          href="#faq"
+        </Link>
+        <Link
+          to="#faq"
           className="block py-2 px-4 text-gray-600 hover:text-gray-900 lg:inline"
         >
           FAQ
-        </a>
+        </Link>
       </div>
 
       {/* Profile Image */}
@@ -84,4 +91,3 @@ export default function Navbar() {
     </nav>
   );
 }
-  
