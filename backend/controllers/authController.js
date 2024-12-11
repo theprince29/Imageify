@@ -37,7 +37,8 @@ export const register = async (req, res) => {
     const {error,value} = registerSchema.validate({email,password,username});
     if(error)
     {
-      return res.status(401).json({success:false,message:error.details[0].message});
+    
+      return res.status(401).json({success:false, message:error.details[0].message});
     }
     const existingUser = await User.findOne({email})
 
@@ -108,14 +109,9 @@ export const login = async (req, res) => {
   }
 
   try {
-    const user = await User.findOne({ email }).select('+password'); // Explicitly include password since it's excluded in the schema
-    console.log('User:', user);
-
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    console.log('Password valid:', isPasswordValid); // Debugging log
-
-    if (!isPasswordValid) {
-      return res.status(401).json({ error: 'Invalid credentials (password mismatch)' });
+    const user = await User.findOne({ email }).select('+password');
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     if (!user.status) {
