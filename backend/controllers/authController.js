@@ -37,7 +37,8 @@ export const register = async (req, res) => {
     const {error,value} = registerSchema.validate({email,password,username});
     if(error)
     {
-      return res.status(401).json({success:false,message:error.details[0].message});
+    
+      return res.status(401).json({success:false, message:error.details[0].message});
     }
     const existingUser = await User.findOne({email})
 
@@ -101,7 +102,7 @@ export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select('+password');
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
