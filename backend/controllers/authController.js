@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
 import passport from 'passport';
-import { registerSchema } from '../middlewares/validator.js';
+import { registerSchema,loginSchema } from '../middlewares/validator.js';
 
 // Helper to send email
 const sendEmail = async (email, subject, message) => {
@@ -37,7 +37,8 @@ export const register = async (req, res) => {
     const {error,value} = registerSchema.validate({email,password,username});
     if(error)
     {
-      return res.status(401).json({success:false,message:error.details[0].message});
+    
+      return res.status(401).json({success:false, message:error.details[0].message});
     }
     const existingUser = await User.findOne({email})
 
@@ -100,8 +101,15 @@ export const verifyEmail = async (req, res) => {
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
+  // Validate request data
+  const { error } = loginSchema.validate({ email, password });
+  if (error) {
+    console.error('Validation Error:', error.details[0].message);
+    return res.status(400).json({ error: error.details[0].message });
+  }
+
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select('+password');
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
