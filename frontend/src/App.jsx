@@ -1,9 +1,15 @@
-import Auth from "./components/Auth/Auth";
+
 import Navbar from "./components/Layout/Navbar";
 import Pricing from "./components/Pricing/Pricing";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./components/Home/HomePage";
 import { ParallaxScroll } from "./components/ui/parallaxScroll";
+import Login from "./components/Auth/Login";
+import Register from "./components/Auth/Register";
+import { Toaster } from "react-hot-toast";
+import RequestPasswordReset from "./components/Auth/RequestPasswordReset";
+import ResetPassword from "./components/Auth/ResetPassword";
+import GenerateImage from "./components/Home/GenerateImage";
 
 function App() {
   return (
@@ -12,14 +18,19 @@ function App() {
      
         <Routes>
           <Route path={"/"} element={<HomePage />} />
-          <Route path={"/Auth"} element={<Auth />} />
+          <Route path={"/login"} element={<Login />} />
+          <Route path = {"/register"} element = {<Register/>} />
           <Route
             path={"/Examples"}
             element={<ParallaxScroll images={images} />}
           />
           <Route path={"/Pricing"} element={<Pricing />} />
+          <Route path="/password-reset" element={<RequestPasswordReset />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+    {/* to test gen ai api */}
+    <Route path="/test" element={<GenerateImage />} />
         </Routes>
-      
+      <Toaster/>
     </div>
   );
 }

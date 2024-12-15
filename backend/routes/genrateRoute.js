@@ -1,8 +1,10 @@
-const express = require('express');
+import express from 'express'
+// const imageController = require('../controllers/imageController');
+import { generateImage } from '../controllers/genrateController.js';
 const router = express.Router();
-const imageController = require('../controllers/imageController');
 
 // Route to handle image generation
-router.post('/generate-image', imageController.generateImage);
+// router.post('/generate-image', imageController.generateImage);
+router.post('/generate-image', generateImage)
 
-module.exports = router;
+export default router;

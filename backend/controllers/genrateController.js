@@ -1,9 +1,14 @@
-const fs = require('fs-extra');
-const path = require('path');
-const { v4: uuidv4 } = require('uuid');
-const { HfInference } = require('@huggingface/inference');
+import fs from 'fs-extra';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { v4 as uuidv4 } from 'uuid';
+import { HfInference } from '@huggingface/inference';
 
-exports.generateImage = async (req, res) => {
+// Get __dirname in ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export const generateImage = async (req, res) => {
   try {
     const { prompt } = req.body;
 
@@ -35,7 +40,6 @@ exports.generateImage = async (req, res) => {
     // Send the image back in the response
     res.set('Content-Type', 'image/jpeg');
     res.sendFile(filePath);
-
   } catch (error) {
     console.error('Error generating image:', error);
     res.status(500).json({ error: 'An error occurred while generating the image.' });

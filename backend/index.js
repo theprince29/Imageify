@@ -4,6 +4,7 @@ import passport from 'passport';
 import session, { Cookie } from 'express-session';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js';
+import genrateRoute from './routes/genrateRoute.js'
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 // import './config/passportConfig.js'; 
@@ -62,7 +63,7 @@ app.use(passport.session());
 
 // Routes
 app.use('/api/auth', authRoutes);
-
+app.use('/api/image', genrateRoute)
 
 
 

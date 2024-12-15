@@ -8,20 +8,6 @@ const Hero = () => {
     <div>
       <div className="flex flex-col items-center justify-center min-h-screen bg-white text-center p-8">
         <div className="w-full max-w-2xl">
-          {/* Discord Button */}
-          {/* <div className="flex justify-end mb-4">
-          <a
-            href="#"
-            className="flex items-center space-x-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold rounded-md"
-          >
-            <img
-              src="discord-icon-url" // replace with actual discord icon URL
-              alt="Discord"
-              className="w-5 h-5"
-            />
-            <span>Join our community on Discord</span>
-          </a>
-        </div> */}
 
           {/* Title */}
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight mb-4">
