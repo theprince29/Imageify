@@ -5,11 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useRef } from 'react';
 
 export default function GenerateImage() {
   const [prompt, setPrompt] = useState('');
   const [image, setImage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const abortControllerRef = useRef(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,10 +24,11 @@ export default function GenerateImage() {
     try {
       setIsSubmitting(true);
       setImage(null); // Reset the image state while generating a new one
-
+      abortControllerRef.current = new AbortController()
       // Make the API call
       const response = await axios.post('http://localhost:3000/api/image/generate-image', { prompt }, {
         responseType: 'blob', // Receive image as a blob
+        signal: abortControllerRef.current.signal
       });
 
       // Convert blob to a URL for display
@@ -38,8 +41,17 @@ export default function GenerateImage() {
       toast.error(error.response?.data?.error || 'Failed to generate image.');
     } finally {
       setIsSubmitting(false);
+      abortControllerRef.current = null;
     }
   };
+
+  function handleStop(){
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort(); 
+      setIsSubmitting(false);
+      toast.info('Image generation stopped.');
+    }
+  }
 
   return (
     <div className="flex items-center justify-center h-screen">
@@ -64,9 +76,12 @@ export default function GenerateImage() {
                 />
               </div>
             </div>
-            <Button className="w-full mt-4" type="submit" disabled={isSubmitting}>
+            <div className='flex mt-4 justify-evenly'>
+            <Button className="w-64 " type="submit" disabled={isSubmitting}>
               {isSubmitting ? 'Generating...' : 'Generate Image'}
             </Button>
+            <Button disabled={!isSubmitting} onClick = {handleStop}>Stop</Button>
+            </div>
           </form>
         </CardContent>
         <CardFooter className="flex flex-col items-center">
