@@ -3,10 +3,13 @@ import { CiSearch } from "react-icons/ci";
 import { Typewriter } from "react-simple-typewriter";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-
+import { useContext } from "react";
+import { Context } from "@/main";
 const Hero = () => {
   const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate()
+  const { isAuthorized, setIsAuthorized, user } = useContext(Context);
+
   const handleClick = () =>{
     navigate('/test')
   }

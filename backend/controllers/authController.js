@@ -237,3 +237,15 @@ export const googleLoginCallback = passport.authenticate('google', {
   failureRedirect: '/login', // Redirect to login page if authentication fails
   successRedirect: '/dashboard', // Redirect to dashboard if authentication succeeds
 });
+
+
+
+// user info
+
+export const getUser = async(req, res) =>{
+  const user = req.user;
+  res.status(200).json({
+    success: true,
+    user
+  })
+}

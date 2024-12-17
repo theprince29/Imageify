@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Context } from '@/main'
+import { useContext } from 'react'
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -13,6 +15,8 @@ export default function Login() {
   });
 
   const [loading, setLoading] = useState(false);
+  const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -27,8 +31,9 @@ export default function Login() {
       const baseURL = import.meta.env.VITE_BACKEND_BASE_URL;
       const response = await axios.post(`${baseURL}/api/auth/login`, formData);
       console.log('Login successful:', response.data);
-      toast.success('Login successful!'); // Show success toast
-      // Handle successful login, e.g., store token, redirect user
+      toast.success('Login successful!'); // Show success toast   
+      setIsAuthorized(true);
+
     } catch (err) {
       console.error('Login failed:', err);
       toast.error(err.response?.data?.message || 'Failed to login. Please try again.'); // Show error toast
