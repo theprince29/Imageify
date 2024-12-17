@@ -7,6 +7,7 @@ import {
   resetPassword,
   googleLogin,
   googleLoginCallback,
+  getUser
 } from "../controllers/authController.js";
 import apiKeyMiddleware from "../middlewares/authMiddleware.js"
 
@@ -45,4 +46,8 @@ router.get("/dashboard/usage", apiKeyMiddleware, async (req, res) => {
   }
 });
 
+
+// get user router
+
+router.get('/user', getUser)
 export default router;

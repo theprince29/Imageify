@@ -11,8 +11,34 @@ import RequestPasswordReset from "./components/Auth/RequestPasswordReset";
 import ResetPassword from "./components/Auth/ResetPassword";
 import GenerateImage from "./components/Home/GenerateImage";
 import FAQ from "./components/Layout/FAQ";
+import { useEffect } from "react";
+
+
+
+import { Context } from "./main";
+import { useContext } from "react";
+
 
 function App() {
+  const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/api/auth/user",
+          {
+            withCredentials: true,
+          }
+        );
+        setUser(response.data.user);
+        setIsAuthorized(true);
+      } catch (error) {
+        setIsAuthorized(false);
+      }
+    };
+    fetchUser();
+  }, [isAuthorized]);
+
   return (
     <div>
       <Navbar />

@@ -6,6 +6,8 @@ import { Label } from "@/components/ui/label"
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { Context } from '@/main'
+import { useContext } from 'react'
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -15,7 +17,7 @@ export default function Register() {
     confirmPassword: ''
 
   })
-
+  const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
   
   const [error, setError] = useState(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -52,6 +54,7 @@ export default function Register() {
         console.log('Registration successful:', response.data)
         toast.success("Registration successful")
         navigate('/')
+        setIsAuthorized(true);
 
        
       } else {
