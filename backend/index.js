@@ -63,6 +63,7 @@ app.use(passport.session());
 
 // Routes
 app.use('/api/auth', authRoutes);
+// app.use('/api/dashbord')
 app.use('/api/image', genrateRoute)
 
 

@@ -174,7 +174,7 @@ export const requestPasswordReset = async (req, res) => {
 
     // Generate password reset token
     const token = crypto.randomBytes(32).toString('hex');
-    const resetUrl = `${req.protocol}://${req.get('host')}/api/auth/reset-password/${token}`;
+    const resetUrl = `https://imageify-gamma.vercel.app/reset-password/${token}`;
     user.password_reset_token = token;
     user.password_reset_token_expires = Date.now() + 3600000; // 1 hour
 
