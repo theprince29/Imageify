@@ -27,7 +27,8 @@ export default function ResetPassword() {
 
     try {
       setIsSubmitting(true);
-      await axios.post(`http://localhost:3000/api/auth/reset-password/${token}`, { password: formData.password });
+      const baseURL = import.meta.env.VITE_BACKEND_BASE_URL;
+      await axios.post(`${baseURL}/api/auth/reset-password/${token}`, { password: formData.password });
 
       toast.success('Password reset successfully.');
       setFormData({ password: '', confirmPassword: '' });
