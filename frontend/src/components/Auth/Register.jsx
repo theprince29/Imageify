@@ -38,9 +38,9 @@ export default function Register() {
     try {
       setIsSubmitting(true)
       setError(null)
-
+      const baseURL = import.meta.env.VITE_BACKEND_BASE_URL;
       // Sending data to backend API using axios
-      const response = await axios.post('http://localhost:3000/api/auth/register', {
+      const response = await axios.post(`${baseURL}/api/auth/register`, {
         email: formData.email,
         password: formData.password,
         username: formData.username

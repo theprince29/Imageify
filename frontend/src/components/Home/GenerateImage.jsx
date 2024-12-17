@@ -36,17 +36,11 @@ export default function GenerateImage() {
       abortControllerRef.current = new AbortController();
 
       // Make the API call
-      const response = await axios.post(
-        'http://localhost:3000/api/image/generate-image',
-        { prompt },
-        {
-          responseType: 'blob', // Receive image as a blob
-          signal: abortControllerRef.current.signal,
-        }
-      );
-
-      // Convert blob to a URL for display
-      const imageUrl = URL.createObjectURL(response.data);
+      const baseURL = import.meta.env.VITE_BACKEND_BASE_URL;
+      const response = await axios.post(`${baseURL}/api/image/generate-image`, { prompt } );
+      // console.log(response);
+      
+      const imageUrl = (response.data.url);
       setImage(imageUrl);
 
       toast.success('Image generated successfully!');

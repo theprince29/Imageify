@@ -14,7 +14,8 @@ export default function RequestPasswordReset() {
     e.preventDefault();
     try {
       setIsSubmitting(true);
-      await axios.post('http://localhost:3000/api/auth/password-reset', { email });
+      const baseURL = import.meta.env.VITE_BACKEND_BASE_URL;
+      await axios.post(`${baseURL}/api/auth/password-reset`, { email });
 
       toast.success('Password reset link sent to your email.');
       setEmail('');
