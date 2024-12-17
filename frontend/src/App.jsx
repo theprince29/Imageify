@@ -10,6 +10,7 @@ import { Toaster } from "react-hot-toast";
 import RequestPasswordReset from "./components/Auth/RequestPasswordReset";
 import ResetPassword from "./components/Auth/ResetPassword";
 import GenerateImage from "./components/Home/GenerateImage";
+import FAQ from "./components/Layout/FAQ";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             element={<ParallaxScroll images={images} />}
           />
           <Route path={"/Pricing"} element={<Pricing />} />
+          <Route path={"/faq"} element = {<FAQ/>}/>
           <Route path="/password-reset" element={<RequestPasswordReset />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
     {/* to test gen ai api */}

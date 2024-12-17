@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { Typewriter } from "react-simple-typewriter";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
   const [searchValue, setSearchValue] = useState("");
+  const navigate = useNavigate()
+  const handleClick = () =>{
+    navigate('/test')
+  }
   return (
     <div>
       <div className="flex flex-col items-center justify-center min-h-screen bg-white text-center p-8">
@@ -19,9 +25,10 @@ const Hero = () => {
           <p className="text-lg md:text-xl text-gray-600 mb-8">
             Transform your ideas into beautiful visuals effortlessly.
           </p>
+          <Button onClick = {handleClick}>Click</Button>
 
           {/* Input Box */}
-          <div className="relative max-w-md mx-auto rounded-lg">
+          {/* <div className="relative max-w-md mx-auto rounded-lg">
             <input
               type="text"
               placeholder=""
@@ -46,13 +53,14 @@ const Hero = () => {
                   delaySpeed={1000}
                 />
               )}
-            </div>
-            <div className="absolute right-4 top-4">
+            </div> */}
+            {/* <div className="absolute right-4 top-4">
               <CiSearch />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
+        
     </div>
   );
 };

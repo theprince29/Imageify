@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
     <nav className="flex justify-between items-center py-2 px-4 border-b border-gray-200 bg-white">
@@ -49,7 +50,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Navigation Links - Hidden on mobile */}
+      {/* Navigation Links and Avatar - Hidden on desktop */}
       <div
         className={`${
           menuOpen ? "block" : "hidden"
@@ -62,31 +63,89 @@ export default function Navbar() {
           Home
         </Link>
         <Link
-          to="Examples"
+          to="/Examples"
           className="block py-2 px-4 text-gray-600 hover:text-gray-900 lg:inline"
         >
           Examples
         </Link>
         <Link
-          to="#pricing"
+          to="/pricing"
           className="block py-2 px-4 text-gray-600 hover:text-gray-900 lg:inline"
         >
           Pricing
         </Link>
         <Link
-          to="#faq"
+          to="/faq"
           className="block py-2 px-4 text-gray-600 hover:text-gray-900 lg:inline"
         >
           FAQ
         </Link>
+
+        {/* Profile Avatar - Visible only when menu is open on mobile */}
+        <div className="block mt-4 lg:hidden">
+          <button
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+            className="flex items-center focus:outline-none"
+          >
+            <Avatar>
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+          </button>
+          {dropdownOpen && (
+            <div className="absolute right-4 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+              <Link
+                to="/dashboard"
+                className="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                onClick={() => setDropdownOpen(false)}
+              >
+                Dashboard
+              </Link>
+              <button
+                onClick={() => {
+                  // Handle logout logic here
+                  setDropdownOpen(false);
+                }}
+                className="w-full text-left px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+              >
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* Profile Image */}
+      {/* Profile Image - Desktop Only */}
       <div className="hidden lg:block">
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        <button
+          onClick={() => setDropdownOpen(!dropdownOpen)}
+          className="flex items-center focus:outline-none"
+        >
+          <Avatar>
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+        </button>
+        {dropdownOpen && (
+          <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+            <Link
+              to="/dashboard"
+              className="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+              onClick={() => setDropdownOpen(false)}
+            >
+              Dashboard
+            </Link>
+            <button
+              onClick={() => {
+                // Handle logout logic here
+                setDropdownOpen(false);
+              }}
+              className="w-full text-left px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+            >
+              Logout
+            </button>
+          </div>
+        )}
       </div>
     </nav>
   );
