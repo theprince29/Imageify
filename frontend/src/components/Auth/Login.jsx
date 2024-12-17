@@ -24,7 +24,8 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:3000/api/auth/login', formData);
+      const baseURL = import.meta.env.VITE_BACKEND_BASE_URL;
+      const response = await axios.post(`${baseURL}/api/auth/login`, formData);
       console.log('Login successful:', response.data);
       toast.success('Login successful!'); // Show success toast
       // Handle successful login, e.g., store token, redirect user

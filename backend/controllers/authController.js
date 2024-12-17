@@ -6,6 +6,40 @@ import crypto from 'crypto';
 import passport from 'passport';
 import { registerSchema,loginSchema } from '../middlewares/validator.js';
 
+
+
+
+export const generateApiKey = async (req, res) => {
+  try {
+    const userId = req.user.id; // Assuming you're authenticating users
+    const apiKey = uuidv4(); // Generate a unique API key
+
+    // Save API key to the user's record
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { apiKey },
+      { new: true }
+    );
+
+    res.status(200).json({ success: true, apiKey: user.apiKey });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Failed to generate API key', error });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Helper to send email
 const sendEmail = async (email, subject, message) => {
   const transporter = nodemailer.createTransport({

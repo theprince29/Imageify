@@ -3,7 +3,14 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { v4 as uuidv4 } from 'uuid';
 import { HfInference } from '@huggingface/inference';
+import cloudinary from 'cloudinary';
 
+// Configure Cloudinary
+cloudinary.v2.config({
+  cloud_name: "dpitkojhg"|| process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: 911458163234269,
+  api_secret: "h0iCXGqKFpvzevqtdm8jBU3RR4U" || process.env.CLOUDINARY_API_SECRET,
+});
 // Get __dirname in ES module
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -33,13 +40,24 @@ export const generateImage = async (req, res) => {
     const imageId = uuidv4();
     const filePath = path.join(__dirname, `../images/${imageId}.jpeg`);
 
-    // Ensure the directory exists and save the image
-    await fs.ensureDir(path.dirname(filePath));
-    await fs.writeFile(filePath, Buffer.from(await blobImage.arrayBuffer()));
+    const tempImagePath = path.join(__dirname, `../temp/${uuidv4()}.jpeg`);
 
-    // Send the image back in the response
-    res.set('Content-Type', 'image/jpeg');
-    res.sendFile(filePath);
+    // Ensure the directory exists and save the image temporarily
+    await fs.ensureDir(path.dirname(tempImagePath));
+    await fs.writeFile(tempImagePath, Buffer.from(await blobImage.arrayBuffer()));
+
+    // Upload the image to Cloudinary
+    const uploadResponse = await cloudinary.v2.uploader.upload(tempImagePath, {
+      folder: 'generated_images', // Optional: specify folder in Cloudinary
+      use_filename: true,
+      unique_filename: false,
+    });
+
+    // Delete the temporary file after uploading
+    await fs.remove(tempImagePath);
+
+    // Send the Cloudinary URL back in the response
+    res.status(200).json({ url: uploadResponse.secure_url });
   } catch (error) {
     console.error('Error generating image:', error);
     res.status(500).json({ error: 'An error occurred while generating the image.' });
