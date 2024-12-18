@@ -5,11 +5,19 @@ import FAQ from '../Layout/FAQ'
 import { Footer } from '../Layout/Footer'
 import { DragCards } from '../DragBox/DragCards'
 
-
-
+import { useContext } from "react";
+import { Context } from "@/main";
+import { useNavigate } from 'react-router-dom'
 
 
 const HomePage = () => {
+   const navigate = useNavigate()
+    const { isAuthorized, setIsAuthorized, user } = useContext(Context);
+
+      if(!isAuthorized){
+        return navigate('/login')
+      }
+    
   return (
     <div>
         <Hero/>

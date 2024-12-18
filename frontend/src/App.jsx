@@ -12,8 +12,9 @@ import ResetPassword from "./components/Auth/ResetPassword";
 import GenerateImage from "./components/Home/GenerateImage";
 import FAQ from "./components/Layout/FAQ";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
-
+import { useNavigate } from "react-router-dom";
 
 import { Context } from "./main";
 import { useContext } from "react";
@@ -21,6 +22,7 @@ import { useContext } from "react";
 
 function App() {
   const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
+  const navigate = useNavigate()
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -39,9 +41,17 @@ function App() {
     fetchUser();
   }, [isAuthorized]);
 
+useEffect(() =>{
+
+  if(!isAuthorized){
+    return navigate('/login')
+  }
+})
+const noNavbarRoutes = ["/login", "/register", "/password-reset", "/reset-password"];
+
   return (
     <div>
-      <Navbar />
+    {!noNavbarRoutes.includes(location.pathname) && <Navbar/>}
      
         <Routes>
           <Route path={"/"} element={<HomePage />} />
@@ -56,7 +66,7 @@ function App() {
           <Route path="/password-reset" element={<RequestPasswordReset />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
     {/* to test gen ai api */}
-    <Route path="/test" element={<GenerateImage />} />
+    <Route path="/image-generate" element={<GenerateImage />} />
         </Routes>
       <Toaster/>
     </div>
