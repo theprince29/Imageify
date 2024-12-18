@@ -13,50 +13,49 @@ import GenerateImage from "./components/Home/GenerateImage";
 import FAQ from "./components/Layout/FAQ";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-
+import Hero from "./components/Home/Hero";
 import { useNavigate } from "react-router-dom";
+import NotFound from "./components/Layout/NotFound";
 
 import { Context } from "./main";
 import { useContext } from "react";
 
 
-function App() {
-  const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
-  const navigate = useNavigate()
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3000/api/auth/user",
-          {
+
+  function App() {
+    const { isAuthorized, setIsAuthorized, setUser } = useContext(Context);
+    const navigate = useNavigate();
+    const location = useLocation();
+  
+    useEffect(() => {
+      const fetchUser = async () => {
+        try {
+          const response = await axios.get("http://localhost:3000/api/auth/user", {
             withCredentials: true,
-          }
-        );
-        setUser(response.data.user);
-        setIsAuthorized(true);
-      } catch (error) {
-        setIsAuthorized(false);
+          });
+          setUser(response.data.user);
+          setIsAuthorized(true);
+        } catch {
+          setIsAuthorized(false);
+        }
+      };
+      fetchUser();
+    }, [setIsAuthorized, setUser]);
+  
+    useEffect(() => {
+      if (!isAuthorized && !["/login", "/register"].includes(location.pathname)) {
+        navigate("/login");
       }
-    };
-    fetchUser();
-  }, [isAuthorized]);
-
-useEffect(() =>{
-
-  if(!isAuthorized){
-    return navigate('/login')
-  }
-})
-const noNavbarRoutes = ["/login", "/register", "/password-reset", "/reset-password"];
-
-  return (
-    <div>
-    {!noNavbarRoutes.includes(location.pathname) && <Navbar/>}
-     
+    }, [isAuthorized, location.pathname, navigate]);
+  
+    const noNavbarRoutes = ["/login", "/register"];
+    return (
+      <div>
+        {!noNavbarRoutes.includes(location.pathname) && <Navbar />}
         <Routes>
-          <Route path={"/"} element={<HomePage />} />
-          <Route path={"/login"} element={<Login />} />
-          <Route path = {"/register"} element = {<Register/>} />
+          <Route path="/" element={<Hero />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route
             path={"/Examples"}
             element={<ParallaxScroll images={images} />}
@@ -67,13 +66,14 @@ const noNavbarRoutes = ["/login", "/register", "/password-reset", "/reset-passwo
           <Route path="/reset-password/:token" element={<ResetPassword />} />
     {/* to test gen ai api */}
     <Route path="/image-generate" element={<GenerateImage />} />
+    <Route path="*" element={<NotFound />} /> 
         </Routes>
-      <Toaster/>
-    </div>
-  );
-}
-
-export default App;
+        <Toaster />
+      </div>
+    );
+  }
+  
+  export default App;
 
 const images = [
   "https://images.unsplash.com/photo-1554080353-a576cf803bda?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3387&q=80",

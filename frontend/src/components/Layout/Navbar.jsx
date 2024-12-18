@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
+import { Cookie } from "lucide-react";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const handleLogout = () =>{
+    Cookies.remove('cookieName');
+  }
 
   return (
     <nav className="flex justify-between items-center py-2 px-4 border-b border-gray-200 bg-white">
@@ -103,7 +108,7 @@ export default function Navbar() {
               </Link>
               <button
                 onClick={() => {
-                  // Handle logout logic here
+                  handleLogoUt()
                   setDropdownOpen(false);
                 }}
                 className="w-full text-left px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900"
