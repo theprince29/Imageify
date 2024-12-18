@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 
@@ -6,7 +6,7 @@ export const DragCards = () => {
   return (
     <section className="relative grid min-h-screen w-full place-content-center overflow-hidden bg-neutral-950">
       <h2 className="relative z-0 text-[20vw] font-black text-neutral-800 md:text-[200px]">
-      IMAGEIFY<span className="text-indigo-500">.</span>
+        IMAGEIFY<span className="text-indigo-500">.</span>
       </h2>
       <Cards />
     </section>
@@ -76,47 +76,52 @@ const Cards = () => {
   );
 };
 
-const Card = ({ containerRef, src, alt, top, left, rotate, className }) => {
-  const [zIndex, setZIndex] = useState(0);
+const Card = ({ containerRef, src, alt, className }) => {
+  const [position, setPosition] = useState({ top: "50%", left: "50%" });
 
-  const updateZIndex = () => {
-    const els = document.querySelectorAll(".drag-elements");
+  const getRandomPosition = () => {
+    const container = containerRef.current;
+    if (container) {
+      const containerWidth = container.offsetWidth;
+      const containerHeight = container.offsetHeight;
 
-    let maxZIndex = -Infinity;
+      const randomTop = Math.random() * (containerHeight - 200); // Prevent cards from leaving the container
+      const randomLeft = Math.random() * (containerWidth - 200); // Prevent cards from leaving the container
 
-    els.forEach((el) => {
-      let zIndex = parseInt(
-        window.getComputedStyle(el).getPropertyValue("z-index")
-      );
-
-      if (!isNaN(zIndex) && zIndex > maxZIndex) {
-        maxZIndex = zIndex;
-      }
-    });
-
-    setZIndex(maxZIndex + 1);
+      return { top: randomTop, left: randomLeft };
+    }
+    return { top: "50%", left: "50%" };
   };
+
+  useEffect(() => {
+    // Set random motion every 2 seconds
+    const interval = setInterval(() => {
+      const newPos = getRandomPosition();
+      setPosition(newPos);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [containerRef]);
 
   return (
     <motion.img
-      onMouseDown={updateZIndex}
+      animate={{
+        top: position.top,
+        left: position.left,
+      }}
+      transition={{
+        duration: 1.5, // Smooth movement duration
+        ease: "easeInOut",
+      }}
       style={{
-        top,
-        left,
-        rotate,
-        zIndex,
+        position: "absolute",
       }}
       className={twMerge(
-        "drag-elements absolute w-48 bg-neutral-200 p-1 pb-4",
+        "drag-elements absolute bg-neutral-200 p-1 pb-4",
         className
       )}
       src={src}
       alt={alt}
-      drag
-      dragConstraints={containerRef}
-      // Uncomment below and remove dragElastic to remove movement after release
-      //   dragMomentum={false}
-      dragElastic={0.65}
     />
   );
 };

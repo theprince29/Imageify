@@ -1,9 +1,8 @@
-
 import Navbar from "./components/Layout/Navbar";
 import Pricing from "./components/Pricing/Pricing";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./components/Home/HomePage";
-import { ParallaxScroll } from "./components/ui/parallaxScroll";
+// import { ParallaxScroll } from "./components/ui/";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import { Toaster } from "react-hot-toast";
@@ -11,13 +10,12 @@ import RequestPasswordReset from "./components/Auth/RequestPasswordReset";
 import ResetPassword from "./components/Auth/ResetPassword";
 import GenerateImage from "./components/Home/GenerateImage";
 import FAQ from "./components/Layout/FAQ";
+import NotFound from "./components/Layout/NotFound";
 import { useEffect } from "react";
-
-
 
 import { Context } from "./main";
 import { useContext } from "react";
-
+import Dashboard from "./components/dashboard/Dashboard";
 
 function App() {
   const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
@@ -27,7 +25,7 @@ function App() {
         const response = await axios.get(
           "http://localhost:3000/api/auth/user",
           {
-            withCredentials: true,
+            withCredentials: true, 
           }
         );
         setUser(response.data.user);
@@ -42,23 +40,25 @@ function App() {
   return (
     <div>
       <Navbar />
-     
-        <Routes>
-          <Route path={"/"} element={<HomePage />} />
-          <Route path={"/login"} element={<Login />} />
-          <Route path = {"/register"} element = {<Register/>} />
-          <Route
-            path={"/Examples"}
-            element={<ParallaxScroll images={images} />}
-          />
-          <Route path={"/Pricing"} element={<Pricing />} />
-          <Route path={"/faq"} element = {<FAQ/>}/>
-          <Route path="/password-reset" element={<RequestPasswordReset />} />
-          <Route path="/reset-password/:token" element={<ResetPassword />} />
-    {/* to test gen ai api */}
-    <Route path="/test" element={<GenerateImage />} />
-        </Routes>
-      <Toaster/>
+
+      <Routes>
+        <Route path={"/"} element={<HomePage />} />
+        <Route path={"/login"} element={<Login />} />
+        <Route path={"/register"} element={<Register />} />
+        {/* <Route
+          path={"/Examples"}
+          element={<ParallaxScroll images={images} />}
+        /> */}
+        <Route path={"/Pricing"} element={<Pricing />} />
+        <Route path={"/faq"} element={<FAQ />} />
+        <Route path="/password-reset" element={<RequestPasswordReset />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        {/* to test gen ai api */}
+        <Route path="/demo" element={<GenerateImage />} />
+        <Route path="/dashboard" element={<Dashboard/>}/>
+        <Route path="*" element={<NotFound />} /> 
+      </Routes>
+      <Toaster />
     </div>
   );
 }
