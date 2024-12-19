@@ -20,7 +20,7 @@ const Cards = () => {
     <div className="absolute inset-0 z-10" ref={containerRef}>
       <Card
         containerRef={containerRef}
-        src="https://images.unsplash.com/photo-1635373670332-43ea883bb081?q=80&w=2781&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        src="https://res.cloudinary.com/dpitkojhg/image/upload/v1734586492/generated_images/e24eb1bc-e43d-4e92-a5b4-ea4ace65ed5d.jpg"
         alt="Example image"
         rotate="6deg"
         top="20%"
@@ -29,7 +29,7 @@ const Cards = () => {
       />
       <Card
         containerRef={containerRef}
-        src="https://images.unsplash.com/photo-1576174464184-fb78fe882bfd?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        src="https://res.cloudinary.com/dpitkojhg/image/upload/v1734586549/generated_images/f8564752-5de3-480d-b686-9a0ce0dc659d.jpg"
         alt="Example image"
         rotate="12deg"
         top="45%"
@@ -38,7 +38,7 @@ const Cards = () => {
       />
       <Card
         containerRef={containerRef}
-        src="https://images.unsplash.com/photo-1503751071777-d2918b21bbd9?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        src="https://res.cloudinary.com/dpitkojhg/image/upload/v1734586601/generated_images/dfe41465-c6c0-4d9f-99c8-1f97db0dfc3f.jpg"
         alt="Example image"
         rotate="-6deg"
         top="20%"
@@ -47,7 +47,7 @@ const Cards = () => {
       />
       <Card
         containerRef={containerRef}
-        src="https://images.unsplash.com/photo-1620428268482-cf1851a36764?q=80&w=2609&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        src="https://res.cloudinary.com/dpitkojhg/image/upload/v1734586679/generated_images/e23607d1-0f41-4aec-af7b-3cf2e900395c.jpg"
         alt="Example image"
         rotate="8deg"
         top="50%"
@@ -56,7 +56,7 @@ const Cards = () => {
       />
       <Card
         containerRef={containerRef}
-        src="https://images.unsplash.com/photo-1602212096437-d0af1ce0553e?q=80&w=2671&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        src="https://res.cloudinary.com/dpitkojhg/image/upload/v1734586728/generated_images/3864e20c-0cea-4185-b1b2-846f4e1a3a03.jpg"
         alt="Example image"
         rotate="18deg"
         top="20%"
@@ -65,7 +65,7 @@ const Cards = () => {
       />
       <Card
         containerRef={containerRef}
-        src="https://images.unsplash.com/photo-1622313762347-3c09fe5f2719?q=80&w=2640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        src="https://res.cloudinary.com/dpitkojhg/image/upload/v1734586794/generated_images/93ed4ebf-7e6e-42fc-a8e6-83b52ae60212.jpg"
         alt="Example image"
         rotate="-3deg"
         top="35%"

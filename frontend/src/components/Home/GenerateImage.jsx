@@ -65,6 +65,18 @@ export default function GenerateImage() {
     }
   }
 
+  // Function to trigger image download
+  const handleDownload = () => {
+    if (image) {
+      const link = document.createElement('a');
+      link.href = image;
+      link.download = 'generated-image.png'; // You can change the name here
+      link.click();
+    } else {
+      toast.error('No image to download.');
+    }
+  };
+
   return (
     <div className="flex items-center justify-center h-screen">
       <Card className="w-[400px] relative">
@@ -117,6 +129,9 @@ export default function GenerateImage() {
           {image && (
             <div className="mt-4">
               <img src={image} alt="Generated AI" className="rounded-lg shadow-md max-w-full" />
+              <Button className="mt-4" onClick={handleDownload}>
+                Download Image
+              </Button>
             </div>
           )}
         </CardFooter>
