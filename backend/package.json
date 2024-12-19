@@ -14,6 +14,7 @@
   "description": "A backend service built with Express.js for handling file uploads, utilizing Hugging Face API for inference tasks, and managing file storage with fs-extra.",
   "dependencies": {
     "@huggingface/inference": "^2.8.0",
+    "axios": "^1.7.9",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.5.1",
     "cookie-parser": "^1.4.7",
