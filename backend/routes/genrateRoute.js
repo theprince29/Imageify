@@ -21,7 +21,10 @@ router.post('/generate-image',identifier , generateImage)
 // router.post('/generate-image', freePlanLimiter, apiKeyMiddleware, generateImage);
 // router.post('/generate-image', apiKeyMiddleware, usageTracker, generateImage);
 // Configure multer for file uploads
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({
+    dest: 'uploads/',
+    limits: { fileSize: 5 * 1024 * 1024 },  // 5MB limit
+});
 // Route to handle image upload and background removal
 router.post('/remove-background', upload.single('file'), removeBackground);
 export default router;

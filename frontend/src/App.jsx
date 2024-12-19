@@ -16,6 +16,8 @@ import { useEffect } from "react";
 import { Context } from "./main";
 import { useContext } from "react";
 import Dashboard from "./components/dashboard/Dashboard";
+import FeatureDocumentation from "./components/Docs/FeatureDocumentation";
+import BackgroundRemover from "./components/Remove/BackgroundRemover";
 
 function App() {
   const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
@@ -55,6 +57,8 @@ function App() {
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         {/* to test gen ai api */}
         <Route path="/demo" element={<GenerateImage />} />
+        <Route path="/docs" element={<FeatureDocumentation/>} />
+        <Route path = "/features/remove-Bg" element = {<BackgroundRemover/>}/>
         <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path="*" element={<NotFound />} /> 
       </Routes>

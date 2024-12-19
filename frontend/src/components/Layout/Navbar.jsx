@@ -46,6 +46,11 @@ const components = [
     href: "/examples/style-transfer",
     description: "Apply artistic styles to your images.",
   },
+  {
+    title: "Remove Bg",
+    href: "/features/remove-Bg",
+    description: "Remove the background from images.",
+  }
 ];
 
 function Navbar() {
@@ -63,7 +68,7 @@ function Navbar() {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger>Examples</NavigationMenuTrigger>
+                <NavigationMenuTrigger>Features</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                     {components.map((component) => (
